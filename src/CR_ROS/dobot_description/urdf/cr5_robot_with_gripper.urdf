@@ -306,16 +306,14 @@
     </collision>
   </link>
 
-  <!--JOINT PARA EL GRIPPER Y EL LINK 6-->
-  <joint name="gripper" type="revolute">
-    <origin xyz="0 0 0"  rpy="0 0 0" />
-    <parent link="Link6" />
-    <child link="robotiq_85_base_link" />
-    <axis xyz="0 0 1" />
-    <limit lower="-6.28" upper="6.28" effort="0" velocity="0" />
+  <joint name="gripper_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="Link6"/>
+    <child link="robotiq_85_base_link"/>
+    <axis xyz="0 0 1"/>
   </joint>
 
-
+  
   <link
     name="left_outer_knuckle">
     <inertial>
@@ -790,6 +788,5 @@
     <axis
       xyz="0 1 0" />
   </joint>
-  
 
 </robot>

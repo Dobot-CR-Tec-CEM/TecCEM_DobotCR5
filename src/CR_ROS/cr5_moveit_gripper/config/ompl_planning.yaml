@@ -147,7 +147,7 @@ cr5_arm:
     - SPARStwo
   projection_evaluator: joints(joint1,joint2)
   longest_valid_segment_fraction: 0.005
-hand:
+gripper:
   planner_configs:
     - SBL
     - EST
@@ -172,5 +172,3 @@ hand:
     - LazyPRMstar
     - SPARS
     - SPARStwo
-  projection_evaluator: joints(gripper,finger_joint)
-  longest_valid_segment_fraction: 0.005

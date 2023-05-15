@@ -15,7 +15,6 @@ hardware_interface:
     - joint4
     - joint5
     - joint6
-    - gripper
     - finger_joint
   sim_control_mode: 1  # 0: position, 1: velocity
 # Publish all joint states
@@ -24,9 +23,25 @@ joint_state_controller:
   type: joint_state_controller/JointStateController
   publish_rate: 50
 controller_list:
-  []
-arm_position_controller:
-  type: position_controllers/JointPositionController
+  - name: cr5_arm_controller
+    action_ns: follow_joint_trajectory
+    default: True
+    type: FollowJointTrajectory
+    joints:
+      - joint1
+      - joint2
+      - joint3
+      - joint4
+      - joint5
+      - joint6
+  - name: gripper_controller
+    action_ns: follow_joint_trajectory
+    default: True
+    type: FollowJointTrajectory
+    joints:
+      - finger_joint
+cr5_arm_controller:
+  type: effort_controllers/JointTrajectoryController
   joints:
     - joint1
     - joint2
@@ -36,32 +51,42 @@ arm_position_controller:
     - joint6
   gains:
     joint1:
-      p: 100
-      d: 1
-      i: 1
-      i_clamp: 1
+      p: 1000
+      d: 50
+      i: 10
+      i_clamp: 100
     joint2:
-      p: 100
-      d: 1
-      i: 1
-      i_clamp: 1
+      p: 5000
+      d: 30
+      i: 100
+      i_clamp: 400
     joint3:
-      p: 100
-      d: 1
-      i: 1
-      i_clamp: 1
+      p: 5000
+      d: 50
+      i: 10
+      i_clamp: 100
     joint4:
-      p: 100
-      d: 1
-      i: 1
-      i_clamp: 1
+      p: 200
+      d: 20
+      i: 10
+      i_clamp: 100
     joint5:
       p: 100
-      d: 1
-      i: 1
-      i_clamp: 1
+      d: 10
+      i: 0.1
+      i_clamp: 100
     joint6:
-      p: 100
+      p: 10
       d: 1
-      i: 1
-      i_clamp: 1
+      i: 0.1
+      i_clamp: 100
+gripper_controller:
+  type: effort_controllers/JointTrajectoryController
+  joints:
+    - finger_joint
+  gains:
+    finger_joint:
+      p: 40
+      d: 0
+      i: 0
+      i_clamp: 1 
