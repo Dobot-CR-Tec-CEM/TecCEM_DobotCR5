@@ -3,7 +3,7 @@ cr5_robot:
     type: joint_state_controller/JointStateController
     publish_rate: 50
   joint_controller:
-    type: position_controllers/JointTrajectoryController
+    type: effort_controllers/JointTrajectoryController
     joints:
       - joint1
       - joint2
