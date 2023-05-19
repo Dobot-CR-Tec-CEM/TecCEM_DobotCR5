@@ -21,6 +21,16 @@
 
   <!-- Given the published joint states, publish tf for the robot links -->
   <!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" /> -->
+  <param name="robot_description" command="$(find xacro)/xacro '$(find dobot_gazebo)/urdf/cr5_robot_gripper.xacro'"/>
+
+ <!-- Run the main MoveIt! executable without trajectory execution (we do not have controllers configured by default) -->
+    <include file="$(find cr5_moveit_gripper)/launch/move_group.launch">
+        <arg name="allow_trajectory_execution" value="true"/>
+        <arg name="fake_execution" value="false"/>
+        <arg name="info" value="true"/>
+        <arg name="debug" value="$(arg debug)"/>
+    </include>
+
 
 
   <node 

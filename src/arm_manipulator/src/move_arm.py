@@ -20,7 +20,7 @@ rospy.init_node("cr5_manipulator", anonymous=True)
 robot = moveit_commander.RobotCommander()
 scene = moveit_commander.PlanningSceneInterface()
 
-group_name = "cr5_arm"
+group_name = "cr5_gripper_arm"
 move_group = moveit_commander.MoveGroupCommander(group_name)
 
 rate = rospy.Rate(100)
@@ -104,7 +104,7 @@ def go_to_goal(x=0, y=0, z=0, w=0):
     pose_goal.position.y = y
     pose_goal.position.z = z
 
-    move_group.set_pose_target(pose_goal, "Link6")
+    move_group.set_pose_target(pose_goal, "finger_joint")
     plan = move_group.plan()
 
     display_trajectory = moveit_msgs.msg.DisplayTrajectory()

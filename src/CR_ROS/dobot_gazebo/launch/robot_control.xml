@@ -8,4 +8,6 @@
     output="screen" ns="/$(arg DOBOT_TYPE)_robot" args="
 joint_controller
 joint_state_controller"/>
+
+
 </launch>
