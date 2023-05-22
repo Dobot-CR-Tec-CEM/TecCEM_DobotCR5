@@ -816,12 +816,12 @@
  <xacro:cr5_transmission joint_name="joint4"/>
  <xacro:cr5_transmission joint_name="joint5"/>
  <xacro:cr5_transmission joint_name="joint6"/>
- <xacro:cr5_transmission joint_name="finger_joint"/>
- <xacro:cr5_transmission joint_name="left_inner_finger_joint"/>
+ <!-- <xacro:cr5_transmission joint_name="finger_joint"/> -->
+ <!--<xacro:cr5_transmission joint_name="left_inner_finger_joint"/>
  <xacro:cr5_transmission joint_name="left_inner_knuckle_joint"/>
  <xacro:cr5_transmission joint_name="right_inner_finger_joint"/>
  <xacro:cr5_transmission joint_name="right_inner_knuckle_joint"/>
- <xacro:cr5_transmission joint_name="right_outer_knuckle_joint"/>
+ <xacro:cr5_transmission joint_name="right_outer_knuckle_joint"/> -->
  
  <!-- ros_control plugin -->
  <gazebo>

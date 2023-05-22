@@ -103,7 +103,7 @@
           <pose frame=''>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/danny/TecCEM_DobotCR5/src/arm_manipulator/stl_gazebo/stl/blue_box.stl</uri>
+              <uri>file://home/danny/Desktop/TecCEM_DobotCR5/src/arm_manipulator/stl_gazebo/stl/blue_box.stl</uri>
               <scale>0.001 0.001 0.001</scale>
             </mesh>
           </geometry>
@@ -123,7 +123,7 @@
           <pose frame=''>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/danny/TecCEM_DobotCR5/src/arm_manipulator/stl_gazebo/stl/blue_box.stl</uri>
+              <uri>/home/danny/Desktop/TecCEM_DobotCR5/src/arm_manipulator/stl_gazebo/stl/blue_box.stl</uri>
               <scale>0.001 0.001 0.001</scale>
             </mesh>
           </geometry>
@@ -199,7 +199,7 @@
           <pose frame=''>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/danny/TecCEM_DobotCR5/src/arm_manipulator/stl_gazebo/stl/red_cube.stl</uri>
+              <uri>/home/danny/Desktop/TecCEM_DobotCR5/src/arm_manipulator/stl_gazebo/stl/red_cube.stl</uri>
               <scale>0.001 0.001 0.001</scale>
             </mesh>
           </geometry>
@@ -219,7 +219,7 @@
           <pose frame=''>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/danny/TecCEM_DobotCR5/src/arm_manipulator/stl_gazebo/stl/red_cube.stl</uri>
+              <uri>/home/danny/Desktop/TecCEM_DobotCR5/src/arm_manipulator/stl_gazebo/stl/red_cube.stl</uri>
               <scale>0.001 0.001 0.001</scale>
             </mesh>
           </geometry>
@@ -361,7 +361,7 @@
           <pose frame=''>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/danny/TecCEM_DobotCR5/src/arm_manipulator/stl_gazebo/table_dobot v4.stl</uri>
+              <uri>/home/danny/Desktop/TecCEM_DobotCR5/src/arm_manipulator/stl_gazebo/table_dobot v4.stl</uri>
               <scale>0.001 0.001 0.001</scale>
             </mesh>
           </geometry>
@@ -381,7 +381,7 @@
           <pose frame=''>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/danny/TecCEM_DobotCR5/src/arm_manipulator/stl_gazebo/table_dobot v4.stl</uri>
+              <uri>/home/danny/Desktop/TecCEM_DobotCR5/src/arm_manipulator/stl_gazebo/table_dobot v4.stl</uri>
               <scale>0.001 0.001 0.001</scale>
             </mesh>
           </geometry>
@@ -457,7 +457,7 @@
           <pose frame=''>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/danny/TecCEM_DobotCR5/src/arm_manipulator/stl_gazebo/stl/red_cube.stl</uri>
+              <uri>/home/danny/Desktop/TecCEM_DobotCR5/src/arm_manipulator/stl_gazebo/stl/red_cube.stl</uri>
               <scale>0.001 0.001 0.001</scale>
             </mesh>
           </geometry>
@@ -477,7 +477,7 @@
           <pose frame=''>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/danny/TecCEM_DobotCR5/src/arm_manipulator/stl_gazebo/stl/red_cube.stl</uri>
+              <uri>/home/danny/Desktop/TecCEM_DobotCR5/src/arm_manipulator/stl_gazebo/stl/red_cube.stl</uri>
               <scale>0.001 0.001 0.001</scale>
             </mesh>
           </geometry>

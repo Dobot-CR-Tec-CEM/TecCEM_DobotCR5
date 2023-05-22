@@ -16,9 +16,11 @@
         <joint name="joint4" />
         <joint name="joint5" />
         <joint name="joint6" />
-        <joint name="finger_joint"/>
+        <chain base_link="base_link" tip_link="Link6" />
+        <!-- <joint name="finger_joint"/> -->
     </group>
     <group name="hand">
+        <joint name="finger_joint"/>
         <link name="robotiq_85_base_link" />
         <link name="left_outer_knuckle" />
         <link name="left_outer_finger" />
@@ -38,19 +40,27 @@
         <joint name="joint5" value="0" />
         <joint name="joint6" value="0" />
     </group_state>
-    <group_state name="paquete" group="hand">
-        <joint name="finger_joint" value="0.725" />
-        <joint name="left_inner_finger_joint" value="0" />
+    <group_state name="closed" group="hand">
+        <joint name="finger_joint" value="0.6" />
+        <!-- <joint name="left_inner_finger_joint" value="0" />
         <joint name="left_inner_knuckle_joint" value="0" />
         <joint name="right_inner_finger_joint" value="0" />
         <joint name="right_inner_knuckle_joint" value="0" />
-        <joint name="right_outer_knuckle_joint" value="0" />
+        <joint name="right_outer_knuckle_joint" value="0" /> -->
+    </group_state>
+    <group_state name="open" group="hand">
+        <joint name="finger_joint" value="0.1"/>
     </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
-    <end_effector name="gripper" parent_link="Link6" group="hand" />
+    <end_effector name="gripper" parent_link="Link6" group="hand" parent_group="cr5_gripper_arm"/>
     <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
     <virtual_joint name="virtual_joint" type="fixed" parent_frame="world" child_link="dummy_link" />
-
+    <!--PASSIVE JOINT: Purpose: this element is used to mark joints that are not actuated-->
+    <!-- <passive_joint name="left_inner_finger_joint" />
+    <passive_joint name="left_inner_knuckle_joint" />
+    <passive_joint name="right_inner_finger_joint" />
+    <passive_joint name="right_inner_knuckle_joint" />
+    <passive_joint name="right_outer_knuckle_joint" /> -->
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
     <disable_collisions link1="Link1" link2="Link2" reason="Adjacent" />
     <disable_collisions link1="Link1" link2="Link4" reason="Never" />

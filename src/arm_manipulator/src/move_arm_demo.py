@@ -14,14 +14,6 @@ from moveit_commander.conversions import pose_to_list
 from geometry_msgs.msg import Pose, PoseStamped
 
 
-"""
-planning frame : dummy_link
-end efector link: Link6
-planning_group: 'cr5_arm'
-"""
-
-
-
 moveit_commander.roscpp_initialize(sys.argv)
 rospy.init_node("move_group_python", anonymous=True)
 
@@ -30,7 +22,7 @@ robot = moveit_commander.RobotCommander()
 
 scene = moveit_commander.PlanningSceneInterface()
 
-group_name = "cr5_arm"
+group_name = "cr5_gripper_arm"
 move_group = moveit_commander.MoveGroupCommander(group_name)
 
 
@@ -87,7 +79,6 @@ move_group.go(joint_goal, wait=True)
 # Calling ``stop()`` ensures that there is no residual movement
 move_group.stop()
 
-
 pose_goal = geometry_msgs.msg.Pose()
 pose_goal.orientation.w = 1.0
 pose_goal.position.x = 0.4
@@ -96,7 +87,6 @@ pose_goal.position.z = 0.4
 
 move_group.set_pose_target(pose_goal)
 
-
 plan = move_group.go(wait=True)
 # Calling `stop()` ensures that there is no residual movement
 move_group.stop()
@@ -104,3 +94,27 @@ move_group.stop()
 # Note: there is no equivalent function for clear_joint_value_targets()
 move_group.clear_pose_targets()
 
+# We can get the joint values from the group and adjust some of the values:
+joint_goal = move_group.get_current_joint_values()
+# The go command can be called with joint values, poses, or without any
+# parameters if you have already set the pose or joint target for the group
+move_group.go(joint_goal, wait=True)
+# Calling ``stop()`` ensures that there is no residual movement
+move_group.stop()
+
+
+
+pose_goal = geometry_msgs.msg.Pose()
+pose_goal.orientation.w = -1.0
+pose_goal.position.x = 0.5
+pose_goal.position.y = 0.5
+pose_goal.position.z = 0.2
+
+move_group.set_pose_target(pose_goal)
+
+plan = move_group.go(wait=True)
+# Calling `stop()` ensures that there is no residual movement
+move_group.stop()
+# It is always good to clear your targets after planning with poses.
+# Note: there is no equivalent function for clear_joint_value_targets()
+move_group.clear_pose_targets()

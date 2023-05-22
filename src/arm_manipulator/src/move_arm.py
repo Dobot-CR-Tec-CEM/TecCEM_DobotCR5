@@ -15,7 +15,7 @@ from geometry_msgs.msg import Pose, PoseStamped, Quaternion
 
 
 moveit_commander.roscpp_initialize(sys.argv)
-rospy.init_node("cr5_manipulator", anonymous=True)
+rospy.init_node("cr5_node", anonymous=True)
 
 robot = moveit_commander.RobotCommander()
 scene = moveit_commander.PlanningSceneInterface()
@@ -104,7 +104,7 @@ def go_to_goal(x=0, y=0, z=0, w=0):
     pose_goal.position.y = y
     pose_goal.position.z = z
 
-    move_group.set_pose_target(pose_goal, "finger_joint")
+    move_group.set_pose_target(pose_goal)
     plan = move_group.plan()
 
     display_trajectory = moveit_msgs.msg.DisplayTrajectory()
@@ -112,22 +112,29 @@ def go_to_goal(x=0, y=0, z=0, w=0):
     display_trajectory.trajectory.append(plan)
     display_trajectory_publisher.publish(display_trajectory)
 
-    move_group.go(wait=False)
-    #move_group.clear_pose_targets()
-    move_group.set_start_state_to_current_state()
-    nueva_pose = move_group.get_current_state()
-    print("JOINT VALUES", nueva_pose)
+    #move_group.go(wait=True)
+    #move_group.set_start_state_to_current_state()
+    #nueva_pose = move_group.get_current_state()
+    #print("JOINT VALUES", nueva_pose)
 
     move_group.execute(plan, wait=True)
+    move_group.clear_pose_targets()
     #rospy.loginfo("====>Moving to:\n{}".format(pose_goal))
     #sucess = move_group.move(wait=True)
-    #print(sucess)
+    # We can get the joint values from the group and adjust some of the values:
+    joint_goal = move_group.get_current_joint_values()
+    # The go command can be called with joint values, poses, or without any
+    # parameters if you have already set the pose or joint target for the group
+    move_group.go(joint_goal, wait=True)
+    # Calling ``stop()`` ensures that there is no residual movement
+    move_group.stop()
+    print("TERMIANDO DE MOVERSE")
     # Calling `stop()` ensures that there is no residual movement
     move_group.stop()
     # It is always good to clear your targets after planning with poses.
     # Note: there is no equivalent function for clear_joint_value_targets()
 
-    rospy.sleep(20)
+    rospy.sleep(200)
 
 def get_current_pose():
     print(move_group.get_current_pose())
@@ -138,28 +145,18 @@ def main():
     #   get_current_pose()
       go_home_pose()
       print("PUNTO 1")
-      go_to_goal(0.5,0.5, 0.5)
+      go_to_goal(0.4,0.4, 0.25)
       #move_joints()
-      print("PUNTO 2")
-      go_to_goal(-0.5,0.5, 0.5)
-      print("PUNTO 3")
-      go_to_goal(-0.5,-0.5, 0.5)
-    #   rospy.sleep(20)
+      #print("PUNTO 2")
+      #go_to_goal(-0.5,0.5, 0.35)
+      #print("PUNTO 3")
+      #go_to_goal(-0.3,-0.5, 0.35)
+    #  rospy.sleep(20)
 
 
 if __name__ == "__main__":
     try:
         main()
-        # print("HOME")
-        # go_home_pose()
-        # print("PUNTO 1")
-        # go_to_goal(0.5,0.5, 0.5)
-        # print("PUNTO 2")
-        # go_to_goal(-0.5,0.5, 0.5)
-        # print("PUNTO 3")
-        # go_to_goal(-0.5,-0.5, 0.5)
-        # print("HOME")
-        # go_home_pose()
     except rospy.ROSInterruptException:
        print("Stopping node")
        exit()

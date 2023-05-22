@@ -62,7 +62,7 @@ Visualization Manager:
       MoveIt_Allow_Sensor_Positioning: false
       MoveIt_Planning_Attempts: 10
       MoveIt_Planning_Time: 5
-      MoveIt_Use_Cartesian_Path: true
+      MoveIt_Use_Cartesian_Path: false
       MoveIt_Use_Constraint_Aware_IK: false
       MoveIt_Warehouse_Host: 127.0.0.1
       MoveIt_Warehouse_Port: 33829
@@ -195,7 +195,7 @@ Visualization Manager:
         Goal State Color: 250; 128; 0
         Interactive Marker Size: 0
         Joint Violation Color: 255; 0; 255
-        Planning Group: cr5_arm
+        Planning Group: cr5_gripper_arm
         Query Goal State: true
         Query Start State: false
         Show Workspace: false
@@ -339,25 +339,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 3.030024528503418
+      Distance: 2.744905471801758
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0
-        Y: 0
-        Z: 0
+        X: -0.23288530111312866
+        Y: -0.12574610114097595
+        Z: 0.1633024662733078
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.7253980040550232
+      Pitch: 0.4753977656364441
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.953583240509033
+      Yaw: 5.493584632873535
     Saved: ~
 Window Geometry:
   Displays:
