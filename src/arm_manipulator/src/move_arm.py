@@ -46,6 +46,9 @@ print ("============ Printing robot state")
 print (robot.get_current_state())
 print ("")
 
+
+targets = ["RedBox"]
+
 def wait_for_state_update(box_name, box_is_known=False, box_is_attached=False, timeout=0.5):
     start = rospy.get_time()
     seconds = rospy.get_time()
@@ -76,7 +79,7 @@ def go_home_pose():
     move_group.go(joint_goal, wait=False)
     # Calling ``stop()`` ensures that there is no residual movement
     move_group.stop()
-    rospy.sleep(30)
+
 
 
 def move_joints():
@@ -134,23 +137,56 @@ def go_to_goal(x=0, y=0, z=0, w=0):
     # It is always good to clear your targets after planning with poses.
     # Note: there is no equivalent function for clear_joint_value_targets()
 
-    rospy.sleep(200)
-
 def get_current_pose():
     print(move_group.get_current_pose())
 
+
+def addTableObstacle():
+    global scene
+  
+
+    for i in targets:
+          box_pose = PoseStamped()
+          box_pose.header.frame_id = "world"
+          box_pose.pose.orientation.w = 1.0
+          box_pose.pose.position.z = 0.05
+          box_pose.pose.position.x = 0.4
+          box_pose.pose.position.y = 0.5
+          box_name = i
+          scene.add_box(box_name, box_pose, size=(0.06, 0.06, 0.06))
+          box_added = wait_for_state_update(box_name, box_is_known=True)
+          while not box_added:
+              scene.add_box(box_name, box_pose, size=(0.06, 0.06, 0.06))
+              box_added = wait_for_state_update(box_name, box_is_known=True)
+          print("Box ", i, " added: ", box_added)
+
+
+
+def attachObject():
+    global scene, robot
+    grasping_group = 'hand'
+    touch_links = robot.get_link_names(group=grasping_group)
+    scene.attach_box(eef_link, "RedBox", touch_links=touch_links)
+
+def detachObject():
+    global scene
+    scene.remove_attached_object(eef_link, name="RedBox")
+
 def main():
+   addTableObstacle()
    while not rospy.is_shutdown():
       print("HOME")
     #   get_current_pose()
       go_home_pose()
       print("PUNTO 1")
       go_to_goal(0.4,0.4, 0.25)
+      attachObject()
       #move_joints()
-      #print("PUNTO 2")
-      #go_to_goal(-0.5,0.5, 0.35)
-      #print("PUNTO 3")
-      #go_to_goal(-0.3,-0.5, 0.35)
+      print("PUNTO 2")
+      go_to_goal(-0.5,0.5, 0.35)
+      print("PUNTO 3")
+      go_to_goal(-0.3,-0.5, 0.35)
+      detachObject()
     #  rospy.sleep(20)
 
 

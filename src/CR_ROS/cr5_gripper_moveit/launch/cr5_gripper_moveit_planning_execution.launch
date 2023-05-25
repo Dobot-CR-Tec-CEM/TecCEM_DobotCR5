@@ -15,7 +15,4 @@
     <arg name="debug" default="$(arg debug)" />
   </include>
 
-
-
-
 </launch>

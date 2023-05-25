@@ -1,0 +1,5 @@
+# you can request either a pick (target of the box to colect) or place (destination of the box)
+string action
+---
+string goal # name of the destination frame, the activity ends with the string "end"
+bool status # bool to check if the current movement is possible (for example you can't ask for to place actions)

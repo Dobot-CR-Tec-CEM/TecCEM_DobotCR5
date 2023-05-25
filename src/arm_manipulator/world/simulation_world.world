@@ -322,7 +322,7 @@
           <wrench>4.39097 4.42077 -5.3941 0 -0 0</wrench>
         </link>
       </model>
-      <model name='redCube_clone'>
+      <model name='RedBox'>
         <pose frame=''>0.184968 0.26414 0.863503 0.046353 -0.031854 0.524672</pose>
         <scale>1 1 1</scale>
         <link name='link_1'>
@@ -358,7 +358,7 @@
         </inertial>
         <pose frame=''>-1e-06 -0 0 0 -0 0</pose>
         <visual name='visual'>
-          <pose frame=''>0 0 0 0 -0 0</pose>
+          <pose frame=''>-0.20 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
               <uri>/home/danny/Desktop/TecCEM_DobotCR5/src/arm_manipulator/stl_gazebo/table_dobot v4.stl</uri>
@@ -439,8 +439,8 @@
       <allow_auto_disable>1</allow_auto_disable>
       <pose frame=''>0.12599 0.120955 0 0 -0 0</pose>
     </model>
-    <model name='redCube_clone'>
-      <link name='link_1'>
+    <model name='RedBox'>
+      <link name='link_0'>
         <inertial>
           <mass>1</mass>
           <inertia>
@@ -452,7 +452,7 @@
             <izz>0.166667</izz>
           </inertia>
         </inertial>
-        <pose frame=''>0 0 0 0 -0 0</pose>
+        <pose frame=''>0.10 0.15 0 0 -0 0</pose>
         <visual name='visual'>
           <pose frame=''>0 0 0 0 -0 0</pose>
           <geometry>

@@ -1,0 +1,6 @@
+# Keep in mind that this service only acts a simulation of the grasping, you'll need to close the grip using move it !
+
+bool action # attach object to the end effector
+string frame # frame to be attached to the end effector
+---
+bool status # bool that indicates that the object has been attached properly

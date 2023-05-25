@@ -55,6 +55,20 @@
     <arg name="moveit_sensor_manager" value="cr5_robot" />
   </include>
 
+
+  <!-- MoveGroup capabilities to load -->
+    <param name="capabilities" value="move_group/MoveGroupCartesianPathService
+              move_group/MoveGroupExecuteTrajectoryAction
+              move_group/MoveGroupKinematicsService
+              move_group/MoveGroupMoveAction
+              move_group/MoveGroupPickPlaceAction
+              move_group/MoveGroupPlanService
+              move_group/MoveGroupQueryPlannersService
+              move_group/MoveGroupStateValidationService
+              move_group/MoveGroupGetPlanningSceneService
+              move_group/ClearOctomapService
+              " />
+      
   <!-- Start the actual move_group node/action server -->
   <node name="move_group" launch-prefix="$(arg launch_prefix)" pkg="moveit_ros_move_group" type="move_group" respawn="false" output="screen" args="$(arg command_args)">
     <!-- Set the display variable, in case OpenGL code is used internally -->

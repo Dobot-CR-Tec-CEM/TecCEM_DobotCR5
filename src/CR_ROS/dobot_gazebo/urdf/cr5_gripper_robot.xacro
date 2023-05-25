@@ -797,6 +797,12 @@
       xyz="0 1 0" />
   </joint>
 
+
+  <!--Kinect-->
+  <!-- position of kinect has to be changed in common_sensors/urdf/sensors/kinect_properties.urdf.xacro--> 
+  <xacro:include filename="$(find common_sensors)/urdf/sensors/kinect.urdf.xacro" />
+  <xacro:sensor_kinect parent="world"/>
+
  <xacro:macro name="cr5_transmission" params="joint_name">
      <transmission name="${joint_name}_trans">
        <type>transmission_interface/SimpleTransmission</type>
@@ -816,7 +822,7 @@
  <xacro:cr5_transmission joint_name="joint4"/>
  <xacro:cr5_transmission joint_name="joint5"/>
  <xacro:cr5_transmission joint_name="joint6"/>
- <!-- <xacro:cr5_transmission joint_name="finger_joint"/> -->
+ <xacro:cr5_transmission joint_name="finger_joint"/>
  <!--<xacro:cr5_transmission joint_name="left_inner_finger_joint"/>
  <xacro:cr5_transmission joint_name="left_inner_knuckle_joint"/>
  <xacro:cr5_transmission joint_name="right_inner_finger_joint"/>
@@ -829,5 +835,6 @@
          <robotNamespace>/cr5_gripper_robot</robotNamespace>
      </plugin>
  </gazebo>
+
 
 </robot>

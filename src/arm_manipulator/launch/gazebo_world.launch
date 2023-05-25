@@ -4,13 +4,17 @@
   <include file="$(find dobot_gazebo)/launch/$(arg DOBOT_TYPE)_robot_description.xml"/>
   <include file="$(find dobot_gazebo)/launch/robot_control.xml"/>
 
-    <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
+
+
+
+ <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="world_name" value="$(find arm_manipulator)/world/simulation_world.world"/>
-    <arg name="paused" value="false"/>
-    <arg name="use_sim_time" value="true"/>
-    <arg name="gui" value="true"/>
-    <arg name="headless" value="false"/>
-    <arg name="debug" value="false"/>
+  </include>
+
+
+  <!-- Given the published joint states, publish tf for the robot links -->
+  <!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" /> -->
+
 
   <node 
      name="urdf_spawner" 
@@ -18,5 +22,4 @@
      type="spawn_model" 
      respawn="false" output="screen"
      args="-urdf -param robot_description -model $(arg DOBOT_TYPE)_robot -x 0 -y -0.15 -z 0.89"/>
-
 </launch>
