@@ -101,12 +101,13 @@
           <geometry>
             <mesh>
               <uri>/home/danny/TecCEM_DobotCR5/src/arm_manipulator/worlds/models/mesa/meshes/table_dobot v4.stl</uri>
-              <scale>1 1 1</scale>
+              <scale>0.001 0.001 0.001</scale>
             </mesh>
           </geometry>
           <material>
             <lighting>1</lighting>
             <script>
+              <name>Gazebo/SkyBlue</name>
               <uri>file://media/materials/scripts/gazebo.material</uri>
               <name>Gazebo/Grey</name>
             </script>
@@ -122,7 +123,7 @@
           <geometry>
             <mesh>
               <uri>/home/danny/TecCEM_DobotCR5/src/arm_manipulator/worlds/models/mesa/meshes/table_dobot v4.stl</uri>
-              <scale>1 1 1</scale>
+              <scale>0.001 0.001 0.001</scale>
             </mesh>
           </geometry>
           <surface>
@@ -179,6 +180,63 @@
       <allow_auto_disable>1</allow_auto_disable>
       <pose frame=''>-0.016078 0.019431 0 0 -0 0</pose>
     </model>
+
+    <model name='unit_box'>
+      <pose frame=''>0.1 0.1 0.9 0 -0 0</pose>
+      <link name='link'>
+        <inertial>
+          <mass>1</mass>
+          <inertia>
+            <ixx>0.166667</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.166667</iyy>
+            <iyz>0</iyz>
+            <izz>0.166667</izz>
+          </inertia>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collision'>
+          <geometry>
+            <box>
+               <size>0.05 0.05 0.05</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>0.05 0.05 0.05</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Red</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+
+
+
     <state world_name='default'>
       <sim_time>3175 260000000</sim_time>
       <real_time>3184 122081645</real_time>
@@ -196,7 +254,7 @@
       </model>
       <model name='mesa'>
         <pose frame=''>-0.016078 0.019431 0 0 -0 0</pose>
-        <scale>1 1 1</scale>
+        <scale>0.001 0.001 0.001</scale>
         <link name='link_0'>
           <pose frame=''>-0.016078 0.019431 0 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
@@ -210,7 +268,7 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose frame=''>-11.8573 -21.0824 17.2521 0 0.421796 0.872196</pose>
+        <pose frame=''>-1.71621 1.86288 1.95633 0 0.453796 -0.831999</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>

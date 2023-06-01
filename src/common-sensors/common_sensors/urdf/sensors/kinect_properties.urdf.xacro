@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<root>
+  <!-- 
+	  Translation and rotation of camera from its base link
+   -->
+	<property name="cam_px" value="0.75" />
+	<property name="cam_py" value="0.4" />
+	<property name="cam_pz" value="1.5" />
+	<property name="cam_or" value="-1.57" />
+	<property name="cam_op" value="1.57" />
+	<property name="cam_oy" value="3.14" />
+</root>

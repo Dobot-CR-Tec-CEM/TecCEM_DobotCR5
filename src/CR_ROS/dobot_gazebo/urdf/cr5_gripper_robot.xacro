@@ -830,4 +830,10 @@
      </plugin>
  </gazebo>
 
+  <!--Kinect-->
+    <!-- position of kinect has to be changed in common_sensors/urdf/sensors/kinect_properties.urdf.xacro--> 
+    <xacro:include filename="$(find common_sensors)/urdf/sensors/kinect.urdf.xacro" />
+    <xacro:sensor_kinect parent="world"/>
+
+
 </robot>
