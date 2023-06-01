@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <launch>
+
+   <!-- Set up env variable so plugin and textures are found -->
+  <env name="GAZEBO_PLUGIN_PATH" value="$(find arm_manipulator)/plugins"/>
+  <env name="GAZEBO_MODEL_PATH" value="$(find arm_manipulator)/models"/>
+  <env name="GAZEBO_RESOURCE_PATH" value="$(find arm_manipulator)/models" />
+
   <arg name="DOBOT_TYPE" default="$(env DOBOT_TYPE)" />
   <include file="$(find dobot_gazebo)/launch/$(arg DOBOT_TYPE)_robot_description.xml"/>
   <include file="$(find dobot_gazebo)/launch/robot_control.xml"/>
 
-    <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
-    <arg name="world_name" value="$(find arm_manipulator)/world/simulation_world.world"/>
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="verbose" value="true" />
+    <arg name="world_name" value="$(find arm_manipulator)/worlds/mundo.world"/>
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="true"/>
     <arg name="gui" value="true"/>
     <arg name="headless" value="false"/>
     <arg name="debug" value="false"/>
+    </include>
 
   <node 
      name="urdf_spawner" 
      pkg="gazebo_ros" 
      type="spawn_model" 
      respawn="false" output="screen"
-     args="-urdf -param robot_description -model $(arg DOBOT_TYPE)_robot -x 0 -y -0.15 -z 0.89"/>
+     args="-urdf -param robot_description -model $(arg DOBOT_TYPE)_robot -x 0 -y -0.0 -z 0.89"/>
 
 </launch>
