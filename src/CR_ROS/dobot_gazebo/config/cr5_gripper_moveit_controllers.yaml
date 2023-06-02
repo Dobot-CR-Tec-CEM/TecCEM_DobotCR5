@@ -11,12 +11,7 @@ cr5_gripper_robot:
       - joint4
       - joint5
       - joint6
-      # - finger_joint
-      # - left_inner_finger_joint
-      # - left_inner_knuckle_joint
-      # - right_inner_finger_joint
-      # - right_inner_knuckle_joint
-      # - right_outer_knuckle_joint
+      
   constraints:
       goal_time: 0.6
       stopped_velocity_tolerance: 0.05
@@ -26,13 +21,26 @@ cr5_gripper_robot:
       joint4: {trajectory: 0.1, goal: 0.1}
       joint5: {trajectory: 0.1, goal: 0.1}
       joint6: {trajectory: 0.1, goal: 0.1}
-      #finger_joint: {trajectory: 0.1, goal: 0.1}
-      # left_inner_finger_joint:  {trajectory: 0.1, goal: 0.1}
-      # left_inner_knuckle_joint:  {trajectory: 0.1, goal: 0.1}
-      # right_inner_finger_joint:  {trajectory: 0.1, goal: 0.1}
-      # right_inner_knuckle_joint:  {trajectory: 0.1, goal: 0.1}
-      # right_outer_knuckle_joint:  {trajectory: 0.1, goal: 0.1}
+      finger_joint: {trajectory: 0.1, goal: 0.1}
+      
   stop_trajectory_duration: 0.5
   state_publish_rate:  25
   action_monitor_rate: 10
 
+hand_controller:
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50
+  joint_controller:
+    type: position_controllers/JointTrajectoryController
+    joints:
+      - finger_joint
+      
+  constraints:
+      goal_time: 0.6
+      stopped_velocity_tolerance: 0.05
+      finger_joint: {trajectory: 0.1, goal: 0.1}
+            
+  stop_trajectory_duration: 0.5
+  state_publish_rate:  25
+  action_monitor_rate: 10
