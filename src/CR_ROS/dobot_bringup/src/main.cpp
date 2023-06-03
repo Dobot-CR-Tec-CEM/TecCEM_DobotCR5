@@ -44,6 +44,7 @@ int main(int argc, char* argv[])
         const char* robot_type = getenv("DOBOT_TYPE");
         string a = robot_type == nullptr ? "cr5" : robot_type;
         string b = "_robot/joint_controller/follow_joint_trajectory";
+        //string b = "_robot/follow_joint_trajectory";
         string ss =  z + a+ b ;
         for (uint32_t i = 0; i < 6; i++)
         {

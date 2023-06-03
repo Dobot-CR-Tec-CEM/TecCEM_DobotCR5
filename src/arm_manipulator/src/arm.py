@@ -41,7 +41,7 @@ def speedFactor():
     
     try:
         speed = rospy.ServiceProxy("/dobot_bringup/srv/SpeedFactor", SpeedFactor)
-        resp = speed(20)
+        resp = speed(10)
         return resp
     except rospy.ServiceException as e:
         print("Service Failed:", e)
@@ -83,13 +83,13 @@ def sync():
 
 if __name__ == "__main__":
     #sync()
-    # clearError()
-    # enable_client()
+    #clearError()
+    #enable_client()
     speedFactor()
+    print(moveJoints(90, 0, 0, 0,0,0))
     #print(moveJoints(160, 50, 30, 10, -90, -90))
-    print("Ya se movio")
-    print(moveJoints(0, 0, 0, 0,0,0))
-    print(go_to_point(500, 500, 500, -80, 0, -100))
+    #print("Ya se movio")
+    #print(go_to_point(500, 500, 500, -80, 0, -100))
     
     #
 

@@ -36,12 +36,12 @@ controller_list:
       - joint5
       - joint6
       #- finger_joint
-  - name: hand_controller
-    action_ns: joint_controller/follow_joint_trajectory
-    default: true
-    type: FollowJointTrajectory
-    joints:
-      - finger_joint
+  # - name: hand_controller
+  #   action_ns: joint_controller/follow_joint_trajectory
+  #   default: true
+  #   type: FollowJointTrajectory
+  #   joints:
+  #     - finger_joint
 
 arm_position_controller:
   type: position_controllers/JointPositionController
