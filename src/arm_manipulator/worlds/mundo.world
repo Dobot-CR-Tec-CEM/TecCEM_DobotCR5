@@ -82,6 +82,7 @@
       <elevation>0</elevation>
       <heading_deg>0</heading_deg>
     </spherical_coordinates>
+
     <model name='mesa'>
       <link name='link_0'>
         <inertial>
@@ -95,12 +96,12 @@
             <izz>0.166667</izz>
           </inertia>
         </inertial>
-        <pose frame=''>-0 0 0 0 -0 0</pose>
+         <pose frame=''>-0.02 0.3 0 -0 0</pose>
         <visual name='visual'>
-          <pose frame=''>0 0 0 0 -0 0</pose>
+           <pose frame=''>-0.02 0.3 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/danny/TecCEM_DobotCR5/src/arm_manipulator/worlds/models/mesa/meshes/table_dobot v4.stl</uri>
+              <uri>model:///models/mesa/meshes/table_dobot v4.stl</uri>
               <scale>0.001 0.001 0.001</scale>
             </mesh>
           </geometry>
@@ -122,7 +123,7 @@
           <pose frame=''>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/danny/TecCEM_DobotCR5/src/arm_manipulator/worlds/models/mesa/meshes/table_dobot v4.stl</uri>
+              <uri>model://models/mesa/meshes/table_dobot v4.stl</uri>
               <scale>0.001 0.001 0.001</scale>
             </mesh>
           </geometry>
@@ -178,23 +179,23 @@
       </link>
       <static>1</static>
       <allow_auto_disable>1</allow_auto_disable>
-      <pose frame=''>-0.02 0.2 0 -0 0</pose>
+      <pose frame=''>-0.02 0.3 0 -0 0</pose>
     </model>
 
-    <model name='unit_box'>
-      <pose frame=''>0.1 0.1 0.9 0 -0 0</pose>
+    <!-- DUMMY BOX -> SOLO PUEDE APARECER EN (-x, -y) -->
+    <model name='Aruco tag0'>
       <link name='link'>
         <inertial>
-          <mass>1</mass>
-          <inertia>
-            <ixx>0.166667</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>0.166667</iyy>
-            <iyz>0</iyz>
-            <izz>0.166667</izz>
-          </inertia>
-          <pose frame=''>0 0 0 0 -0 0</pose>
+            <mass>1</mass>
+            <inertia>
+              <ixx>0.166667</ixx>
+              <ixy>0</ixy>
+              <ixz>0</ixz>
+              <iyy>0.166667</iyy>
+              <iyz>0</iyz>
+              <izz>0.166667</izz>
+            </inertia>
+            <pose frame=''>0 0 0 0 -0 0</pose>
         </inertial>
         <collision name='collision'>
           <geometry>
@@ -216,7 +217,8 @@
             </friction>
           </surface>
         </collision>
-        <visual name='visual'>
+        <visual name='front_visual'>
+          <pose frame=''>0 0 0.0025 0 -0 0</pose>
           <geometry>
             <box>
               <size>0.05 0.05 0.05</size>
@@ -224,16 +226,26 @@
           </geometry>
           <material>
             <script>
-              <name>Gazebo/Red</name>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <uri>model://models/tag_0/materials/scripts/tag_0.material</uri>
+              <name>aruco_tag_0</name>
             </script>
           </material>
+        </visual>
+        <visual name='rear_visual'>
+          <pose frame=''>0 0 -0.0025 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.05 0.05 0.05</size>
+            </box> 
+          </geometry>
         </visual>
         <self_collide>0</self_collide>
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
+      <pose frame=''>0.1 -0.3 0.9 0 0 0</pose>
     </model>
+
 
 
 
@@ -257,6 +269,16 @@
         <scale>0.001 0.001 0.001</scale>
         <link name='link_0'>
           <pose frame=''>-0.016078 0.019431 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='Aruco tag0'>
+        <pose frame=''>0.1 -0.3 0.9 0 0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>0.1 -0.3 0.9 0 0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
