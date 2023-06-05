@@ -1,8 +1,10 @@
-<?xml version="1.0"?>
-<robot name="cr5_robot" xmlns:xacro="http://ros.org/wiki/xacro">
-
- <link name="dummy_link" />
- <link name="base_link">
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-1-g15f4949  Build Version: 1.6.7594.29634
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot name="cr5_robot">
+  <link name="dummy_link" />
+  <link name="base_link">
     <inertial>
       <origin xyz="-8.0961E-06 0.0019103 0.028995" rpy="0 0 0" />
       <mass value="0.90882" />
@@ -31,11 +33,6 @@
       </geometry>
     </collision>
   </link>
-  <link  name="world"/>
-<joint name="world_joint" type="fixed">
-    <parent link="world" />
-    <child  link="dummy_link" />
-  </joint>
 
   <joint name="dummy_joint" type="fixed">
     <parent link="dummy_link" />
@@ -78,7 +75,7 @@
     <parent link="base_link" />
     <child link="Link1" />
     <axis xyz="0 0 1" />
-    <limit lower="-3.14" upper="3.14" effort="300" velocity="100" />
+    <limit lower="-3.14" upper="3.14" effort="0" velocity="0" />
   </joint>
 
   <link name="Link2">
@@ -116,7 +113,7 @@
     <parent link="Link1" />
     <child  link="Link2" />
     <axis xyz="0 0 1" />
-    <limit lower="-3.14" upper="3.14" effort="300" velocity="100" />
+    <limit lower="-3.14" upper="3.14" effort="0" velocity="0" />
   </joint>
 
   <link name="Link3">
@@ -154,7 +151,7 @@
     <parent link="Link2" />
     <child link="Link3" />
     <axis  xyz="0 0 1" />
-    <limit lower="-2.86"  upper="2.86"  effort="300" velocity="100" />
+    <limit lower="-2.86"  upper="2.86"  effort="0" velocity="0" />
   </joint>
 
   <link name="Link4">
@@ -191,7 +188,7 @@
     <parent link="Link3" />
     <child link="Link4" />
     <axis xyz="0 0 1" />
-    <limit lower="-3.14" upper="3.14" effort="300" velocity="100" />
+    <limit lower="-3.14" upper="3.14" effort="0" velocity="0" />
   </joint>
   <link
     name="Link5">
@@ -228,7 +225,7 @@
     <parent link="Link4" />
     <child link="Link5" />
     <axis xyz="0 0 1" />
-    <limit lower="-3.14" upper="3.14" effort="300" velocity="100" />
+    <limit lower="-3.14" upper="3.14" effort="0" velocity="0" />
   </joint>
 
   <link name="Link6">
@@ -265,42 +262,7 @@
     <parent link="Link5" />
     <child link="Link6" />
     <axis xyz="0 0 1" />
-    <limit lower="-6.28" upper="6.28" effort="300" velocity="100" />
+    <limit lower="-6.28" upper="6.28" effort="0" velocity="0" />
   </joint>
-
-
-
-
-
- <xacro:macro name="cr5_transmission" params="joint_name">
-     <transmission name="${joint_name}_trans">
-       <type>transmission_interface/SimpleTransmission</type>
-       <joint name="${joint_name}">
-         <!--<hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>-->
-         <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-       </joint>
-       <actuator name="${joint_name}_motor">
-         <mechanicalReduction>1</mechanicalReduction>
-       </actuator>
-     </transmission>
- </xacro:macro>
-
- <xacro:cr5_transmission joint_name="joint1"/>
- <xacro:cr5_transmission joint_name="joint2"/>
- <xacro:cr5_transmission joint_name="joint3"/>
- <xacro:cr5_transmission joint_name="joint4"/>
- <xacro:cr5_transmission joint_name="joint5"/>
- <xacro:cr5_transmission joint_name="joint6"/>
- <!-- ros_control plugin -->
- <gazebo>
-     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-         <robotNamespace>/cr5_robot</robotNamespace>
-     </plugin>
- </gazebo>
-
-
-
-
-
 
 </robot>

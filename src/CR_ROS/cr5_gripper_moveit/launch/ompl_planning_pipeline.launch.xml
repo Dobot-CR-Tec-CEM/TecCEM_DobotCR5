@@ -22,8 +22,8 @@
   <param name="planning_plugin" value="$(arg planning_plugin)" />
   <param name="request_adapters" value="$(arg planning_adapters)" />
   <param name="start_state_max_bounds_error" value="$(arg start_state_max_bounds_error)" />
-  <!-- <param name="capabilities" value="$(arg capabilities)" />
-  <param name="disable_capabilities" value="$(arg disable_capabilities)" /> -->
+  <param name="capabilities" value="$(arg capabilities)" />
+  <param name="disable_capabilities" value="$(arg disable_capabilities)" />
 
   <rosparam command="load" file="$(find cr5_gripper_moveit)/config/ompl_planning.yaml"/>
 

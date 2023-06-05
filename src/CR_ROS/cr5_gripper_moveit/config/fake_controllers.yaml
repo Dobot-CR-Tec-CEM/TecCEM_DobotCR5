@@ -1,5 +1,5 @@
 controller_list:
-  - name: fake_cr5_gripper_arm_controller
+  - name: fake_cr5_gripper_robot_controller
     type: $(arg fake_execution_type)
     joints:
       - joint1
@@ -8,12 +8,12 @@ controller_list:
       - joint4
       - joint5
       - joint6
-  - name: fake_hand_controller
+  - name: fake_gripper_controller
     type: $(arg fake_execution_type)
     joints:
-      - finger_joint
+      - gripper_finger1_joint
 initial:  # Define initial robot poses.
-  - group: cr5_gripper_arm
+  - group: cr5_gripper_robot
     pose: home
-  - group: hand
-    pose: paquete
+  - group: gripper
+    pose: close
