@@ -13,7 +13,7 @@ import moveit_msgs.msg
 import geometry_msgs.msg
 from moveit_commander.conversions import pose_to_list
 from geometry_msgs.msg import Pose, PoseStamped, Quaternion
-
+from dobot_bringup.srv import *
 
 moveit_commander.roscpp_initialize(sys.argv)
 rospy.init_node("cr5_node", anonymous=True)
@@ -116,7 +116,19 @@ def addObstacles():
             scene.add_box(box_name, box_pose, size=(0.359288, 0.171428, 0.109964))
             obstacle_added = wait_for_state_update(box_name, box_is_known=True, timeout=1.5)
         print("Obstacle ", i, " added: ", obstacle_added)
+  
+
+def speedFactor():
+    rospy.wait_for_service("/dobot_bringup/srv/SpeedFactor")
     
+    try:
+        speed = rospy.ServiceProxy("/dobot_bringup/srv/SpeedFactor", SpeedFactor)
+        resp = speed(30)
+        return resp
+    except rospy.ServiceException as e:
+        print("Service Failed:", e)
+
+
 
 def getTf(goal_name):
     """
@@ -192,9 +204,20 @@ def add_table():
         scene.add_box(table_name, table_obs, size=(1.5, 0.801, 0.1))
     obstacle_added = wait_for_state_update(table_name, box_is_known=True, timeout=1.5)
 
+def armOrientation():
+    rospy.wait_for_service("/dobot_bringup/srv/SetArmOrientation")
+    
+    try:
+        arm = rospy.ServiceProxy("/dobot_bringup/srv/SetArmOrientation", SetArmOrientation)
+        resp = arm(-1, 1, 1, 1)
+        return resp
+    except rospy.ServiceException as e:
+        print("Service Failed:", e)
 
 
 def main():
+   speedFactor()
+   armOrientation()
    add_table()
    while not rospy.is_shutdown():
       print("HOME")
@@ -203,17 +226,23 @@ def main():
       #move_joints()
       #print(getTf("box1"))
       print("PUNTO 1")
+      armOrientation()
       go_to_goal(-0.593, -0.318, 0.55)
       print("Bajando")
+      armOrientation()
       go_to_goal(-0.593, -0.318, 0.32)
       print("Subiendo")
+      armOrientation()
       go_to_goal(-0.593, -0.318, 0.55)
       #exit()
       print("PUNTO 2")
+      armOrientation()
       go_to_goal(0.433, -0.285, 0.55)
       print("Bajando")
+      armOrientation()
       go_to_goal(0.433, -0.285, 0.32)
       print("Subiendo")
+      armOrientation()
       go_to_goal(0.433, -0.285, 0.55)
       #print("PUNTO 3")
       #go_to_goal(-0.3,-0.5, 0.35)
