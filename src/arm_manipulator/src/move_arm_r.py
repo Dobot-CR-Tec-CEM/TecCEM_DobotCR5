@@ -15,17 +15,14 @@ from moveit_commander.conversions import pose_to_list
 from geometry_msgs.msg import Pose, PoseStamped, Quaternion
 from dobot_bringup.srv import *
 
-
 moveit_commander.roscpp_initialize(sys.argv)
 rospy.init_node("cr5_node", anonymous=True)
 
 robot = moveit_commander.RobotCommander()
-
 scene = moveit_commander.PlanningSceneInterface()
 
 group_name = "cr5_gripper_robot"
 move_group = moveit_commander.MoveGroupCommander(group_name)
-
 
 rate = rospy.Rate(10)
 
@@ -33,22 +30,22 @@ display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path
                                                moveit_msgs.msg.DisplayTrajectory)
 
 # We can get the name of the reference frame for this robot:
-planning_frame = move_group.get_planning_frame()
-print ("============ Planning frame: %s" % planning_frame)
+# planning_frame = move_group.get_planning_frame()
+# print ("============ Planning frame: %s" % planning_frame)
 
-# We can also print the name of the end-effector link for this group:
-eef_link = move_group.get_end_effector_link()
-print ("============ End effector link: %s" % eef_link)
+# # We can also print the name of the end-effector link for this group:
+# eef_link = move_group.get_end_effector_link()
+# print ("============ End effector link: %s" % eef_link)
 
-# We can get a list of all the groups in the robot:
-group_names = robot.get_group_names()
-print ("============ Available Planning Groups:", robot.get_group_names())
+# # We can get a list of all the groups in the robot:
+# group_names = robot.get_group_names()
+# print ("============ Available Planning Groups:", robot.get_group_names())
 
-# Sometimes for debugging it is useful to print the entire state of the
-# robot:
-print ("============ Printing robot state")
-print (robot.get_current_state())
-print ("")
+# # Sometimes for debugging it is useful to print the entire state of the
+# # robot:
+# print ("============ Printing robot state")
+# print (robot.get_current_state())
+# print ("")
 
 def wait_for_state_update(box_name, box_is_known=False, box_is_attached=False, timeout=0.5):
     start = rospy.get_time()
@@ -132,7 +129,6 @@ def speedFactor():
         print("Service Failed:", e)
 
 
-
 def getTf(goal_name):
     """
     Function that will get the name of
@@ -174,12 +170,6 @@ def go_to_goal(x=0, y=0, z=0, w=0):
     #move_group.execute(plan, wait=True)
     move_group.clear_pose_targets()
     #rospy.loginfo("====>Moving to:\n{}".format(pose_goal))
-    #sucess = move_group.move(wait=True)
-    # We can get the joint values from the group and adjust some of the values:
-    #joint_goal = move_group.get_current_joint_values()
-    # The go command can be called with joint values, poses, or without any
-    # parameters if you have already set the pose or joint target for the group
-    #move_group.go(joint_goal, wait=True)
     # Calling ``stop()`` ensures that there is no residual movement
     move_group.stop()
     print("TERMIANDO DE MOVERSE")
@@ -217,6 +207,46 @@ def armOrientation():
     except rospy.ServiceException as e:
         print("Service Failed:", e)
 
+def runScript(name):
+    rospy.wait_for_service("/dobot_bringup/srv/RunScript")
+    
+    try:
+        f = rospy.ServiceProxy("/dobot_bringup/srv/RunScript", RunScript)
+        resp = f(name)
+        return resp
+    except rospy.ServiceException as e:
+        print("Service Failed:", e)
+
+def enable_client():
+    rospy.wait_for_service('/dobot_bringup/srv/EnableRobot')
+    
+    try:
+        enable = rospy.ServiceProxy('/dobot_bringup/srv/EnableRobot', EnableRobot)
+        resp = enable()
+        return resp
+    except rospy.ServiceException as e:
+        print("Service Failed:", e)
+
+def speedFactor():
+    rospy.wait_for_service("/dobot_bringup/srv/SpeedFactor")
+    
+    try:
+        speed = rospy.ServiceProxy("/dobot_bringup/srv/SpeedFactor", SpeedFactor)
+        resp = speed(10)
+        return resp
+    except rospy.ServiceException as e:
+        print("Service Failed:", e)
+
+def clearError():
+    rospy.wait_for_service("/dobot_bringup/srv/ClearError")
+    
+    try:
+        clear = rospy.ServiceProxy("/dobot_bringup/srv/ClearError", ClearError)
+        resp = clear()
+        return resp
+    except rospy.ServiceException as e:
+        print("Service Failed:", e)
+
 
 def runScript(name):
     rospy.wait_for_service("/dobot_bringup/srv/RunScript")
@@ -224,61 +254,46 @@ def runScript(name):
     try:
         f = rospy.ServiceProxy("/dobot_bringup/srv/RunScript", RunScript)
         resp = f(name)
-        #rospy.sleep(5)
-        return resp
-    except rospy.ServiceException as e:
-        print("Service Failed:", e)
-def sync():
-    rospy.wait_for_service("/dobot_bringup/srv/Sync")
-    
-    try:
-        sync = rospy.ServiceProxy("/dobot_bringup/srv/Sync", Sync)
-        resp = sync()
         return resp
     except rospy.ServiceException as e:
         print("Service Failed:", e)
 
+
 def main():
    speedFactor()
-   #armOrientation()
+   armOrientation()
    add_table()
-   #sync()
    while not rospy.is_shutdown():
       print("HOME")
-      # get_current_pose()
+    #   get_current_pose()
       go_home_pose()
       #move_joints()
       #print(getTf("box1"))
       print("PUNTO 1")
-      
+      #runScript("openGripper")
+      #rospy.sleep(5)
       go_to_goal(-0.593, -0.318, 0.55)
-      runScript("openGripper")
       print("Bajando")
-      
-      go_to_goal(-0.593, -0.318, 0.22)
       #runScript("closeGripper")
-      
+      #rospy.sleep(5)
 
-
+      go_to_goal(-0.593, -0.318, 0.27)
       print("Subiendo")
+      #armOrientation()
       go_to_goal(-0.593, -0.318, 0.55)
       #exit()
       print("PUNTO 2")
-     
+      #armOrientation()
       go_to_goal(0.433, -0.285, 0.55)
       print("Bajando")
-      #runScript("openGripper")
-      #rospy.sleep(5)
-      
-      go_to_goal(0.433, -0.285, 0.22)
+      #armOrientation()
+      go_to_goal(0.433, -0.285, 0.27)
       print("Subiendo")
-      
+      #armOrientation()
       go_to_goal(0.433, -0.285, 0.55)
-      #runScript("closeGripper")
-      #rospy.sleep(5)
       #print("PUNTO 3")
       #go_to_goal(-0.3,-0.5, 0.35)
-        
+
       #rate.sleep()
 
 

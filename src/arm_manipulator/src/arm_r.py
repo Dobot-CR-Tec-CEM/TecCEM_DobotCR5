@@ -99,12 +99,12 @@ def toolDOEx():
     except rospy.ServiceException as e:
         print("Service Failed:", e)
 
-def dO(id, val):
+def dO():
     rospy.wait_for_service("/dobot_bringup/srv/DO")
     
     try:
         arm = rospy.ServiceProxy("/dobot_bringup/srv/DO", DO)
-        resp = arm(id, val)
+        resp = arm(1, 0)
         return resp
     except rospy.ServiceException as e:
         print("Service Failed:", e)
@@ -127,41 +127,14 @@ def payLoad():
         resp = arm(1, 20)
         return resp
     except rospy.ServiceException as e:
-        print("Service Failed:", e) #RunScript
-
-def runScript(name):
-    rospy.wait_for_service("/dobot_bringup/srv/RunScript")
-    
-    try:
-        f = rospy.ServiceProxy("/dobot_bringup/srv/RunScript", RunScript)
-        resp = f(name)
-        return resp
-    except rospy.ServiceException as e:
-        print("Service Failed:", e) #RunScript  PowerOn
-
-def power():
-    rospy.wait_for_service("/dobot_bringup/srv/PowerOn")
-    
-    try:
-        f = rospy.ServiceProxy("/dobot_bringup/srv/PowerOn", PowerOn)
-        resp = f()
-        return resp
-    except rospy.ServiceException as e:
         print("Service Failed:", e)
 
 if __name__ == "__main__":
-    #clearError()
-    #power()
-    #enable_client()
+    clearError()
+    enable_client()
     #speedFactor()
-    #print(runScript("initGripper"))
-    sync()
-    for i in range(3):
-        runScript("closeGripper")
-        rospy.sleep(5)
-        runScript("openGripper")
-        rospy.sleep(5)
     #armOrientation()
+    #sync()
     #toolDOEx()
     #payLoad()
     #doExecute()()
@@ -169,9 +142,7 @@ if __name__ == "__main__":
     #print(moveL(-552, -470, 253, -178, -0.27, 119.28))
     #print(moveL(-552, -470, 553, -178, -0.27, 119.28))
     #print("Ya se movio")
-    #for i in range(1, 25):
-    #    dO(i, 1)
-    #    dO(i, 0)
+
 
     #print(moveJ(552, -470, 553, -178, -0.27, 119.28))
     #print(moveL(552, -470, 253, -178, -0.27, 119.28))

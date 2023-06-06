@@ -12,43 +12,42 @@ import moveit_commander
 import moveit_msgs.msg
 import geometry_msgs.msg
 from moveit_commander.conversions import pose_to_list
-from geometry_msgs.msg import Pose, PoseStamped, Quaternion
+from geometry_msgs.msg import Pose2D, PoseStamped, Quaternion
 from dobot_bringup.srv import *
-
 
 moveit_commander.roscpp_initialize(sys.argv)
 rospy.init_node("cr5_node", anonymous=True)
 
-robot = moveit_commander.RobotCommander()
 
+medicion_ArUco = Pose2D()
+robot = moveit_commander.RobotCommander()
 scene = moveit_commander.PlanningSceneInterface()
 
 group_name = "cr5_gripper_robot"
 move_group = moveit_commander.MoveGroupCommander(group_name)
-
 
 rate = rospy.Rate(10)
 
 display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path',
                                                moveit_msgs.msg.DisplayTrajectory)
 
-# We can get the name of the reference frame for this robot:
-planning_frame = move_group.get_planning_frame()
-print ("============ Planning frame: %s" % planning_frame)
+# # We can get the name of the reference frame for this robot:
+# planning_frame = move_group.get_planning_frame()
+# print ("============ Planning frame: %s" % planning_frame)
 
-# We can also print the name of the end-effector link for this group:
-eef_link = move_group.get_end_effector_link()
-print ("============ End effector link: %s" % eef_link)
+# # We can also print the name of the end-effector link for this group:
+# eef_link = move_group.get_end_effector_link()
+# print ("============ End effector link: %s" % eef_link)
 
-# We can get a list of all the groups in the robot:
-group_names = robot.get_group_names()
-print ("============ Available Planning Groups:", robot.get_group_names())
+# # We can get a list of all the groups in the robot:
+# group_names = robot.get_group_names()
+# print ("============ Available Planning Groups:", robot.get_group_names())
 
-# Sometimes for debugging it is useful to print the entire state of the
-# robot:
-print ("============ Printing robot state")
-print (robot.get_current_state())
-print ("")
+# # Sometimes for debugging it is useful to print the entire state of the
+# # robot:
+# print ("============ Printing robot state")
+# print (robot.get_current_state())
+# print ("")
 
 def wait_for_state_update(box_name, box_is_known=False, box_is_attached=False, timeout=0.5):
     start = rospy.get_time()
@@ -157,38 +156,17 @@ def go_to_goal(x=0, y=0, z=0, w=0):
     move_group.set_pose_target(pose_goal)
     plan = move_group.plan()
 
-    
     display_trajectory = moveit_msgs.msg.DisplayTrajectory()
     display_trajectory.trajectory_start = robot.get_current_state()
     #move_group.set_pose_target(move_group.get_current_pose())
     display_trajectory.trajectory.append(plan)
-
-
     display_trajectory_publisher.publish(display_trajectory)
 
     move_group.go(wait=False)
-    #move_group.set_start_state_to_current_state()
-    #nueva_pose = move_group.get_current_state()
-    #print("JOINT VALUES", nueva_pose)
-
-    #move_group.execute(plan, wait=True)
     move_group.clear_pose_targets()
-    #rospy.loginfo("====>Moving to:\n{}".format(pose_goal))
-    #sucess = move_group.move(wait=True)
-    # We can get the joint values from the group and adjust some of the values:
-    #joint_goal = move_group.get_current_joint_values()
-    # The go command can be called with joint values, poses, or without any
-    # parameters if you have already set the pose or joint target for the group
-    #move_group.go(joint_goal, wait=True)
-    # Calling ``stop()`` ensures that there is no residual movement
     move_group.stop()
-    print("TERMIANDO DE MOVERSE")
-    # Calling `stop()` ensures that there is no residual movement
-    #move_group.stop()
-    # It is always good to clear your targets after planning with poses.
-    # Note: there is no equivalent function for clear_joint_value_targets()
-
-    rospy.sleep(14)
+    print("TERMINANDO DE MOVERSE")
+    rospy.sleep(18)
 
 def get_current_pose():
     print(move_group.get_current_pose())
@@ -217,7 +195,6 @@ def armOrientation():
     except rospy.ServiceException as e:
         print("Service Failed:", e)
 
-
 def runScript(name):
     rospy.wait_for_service("/dobot_bringup/srv/RunScript")
     
@@ -238,48 +215,90 @@ def sync():
     except rospy.ServiceException as e:
         print("Service Failed:", e)
 
+def speedFactor():
+    rospy.wait_for_service("/dobot_bringup/srv/SpeedFactor")
+    
+    try:
+        speed = rospy.ServiceProxy("/dobot_bringup/srv/SpeedFactor", SpeedFactor)
+        resp = speed(10)
+        return resp
+    except rospy.ServiceException as e:
+        print("Service Failed:", e)
+
+def clearError():
+    rospy.wait_for_service("/dobot_bringup/srv/ClearError")
+    
+    try:
+        clear = rospy.ServiceProxy("/dobot_bringup/srv/ClearError", ClearError)
+        resp = clear()
+        return resp
+    except rospy.ServiceException as e:
+        print("Service Failed:", e)
+
+
+def runScript(name):
+    rospy.wait_for_service("/dobot_bringup/srv/RunScript")
+    
+    try:
+        f = rospy.ServiceProxy("/dobot_bringup/srv/RunScript", RunScript)
+        resp = f(name)
+        return resp
+    except rospy.ServiceException as e:
+        print("Service Failed:", e)
+
+
+
+def coords_callback(msg):
+    global medicion_ArUco
+    #print(type(msg))
+    if msg is not None:
+        medicion_ArUco.x = msg.x
+        medicion_ArUco.y = msg.y
+        medicion_ArUco.theta = msg.theta
+
+pose = rospy.Subscriber("/pose_aruco", Pose2D, coords_callback)
+
+
 def main():
    speedFactor()
    #armOrientation()
    add_table()
-   #sync()
+   runScript("initGripper")
+   runScript("openGripper")
    while not rospy.is_shutdown():
       print("HOME")
-      # get_current_pose()
+    #   get_current_pose()
       go_home_pose()
       #move_joints()
       #print(getTf("box1"))
-      print("PUNTO 1")
-      
-      go_to_goal(-0.593, -0.318, 0.55)
-      runScript("openGripper")
-      print("Bajando")
-      
-      go_to_goal(-0.593, -0.318, 0.22)
-      #runScript("closeGripper")
-      
-
-
-      print("Subiendo")
-      go_to_goal(-0.593, -0.318, 0.55)
-      #exit()
-      print("PUNTO 2")
-     
-      go_to_goal(0.433, -0.285, 0.55)
-      print("Bajando")
-      #runScript("openGripper")
-      #rospy.sleep(5)
-      
-      go_to_goal(0.433, -0.285, 0.22)
-      print("Subiendo")
-      
-      go_to_goal(0.433, -0.285, 0.55)
-      #runScript("closeGripper")
-      #rospy.sleep(5)
-      #print("PUNTO 3")
-      #go_to_goal(-0.3,-0.5, 0.35)
-        
-      #rate.sleep()
+      if medicion_ArUco.x and medicion_ArUco.y != None:
+          x = medicion_ArUco.x
+          y = medicion_ArUco.y
+          print('llendo a: ', x, y)
+          print("PUNTO 1")
+          runScript("openGripper")
+          go_to_goal(x/100, y/100, 0.35)
+          print("Bajando")
+          
+          runScript("closeGripper")
+          go_to_goal(x/100, y/100, 0.22)
+          print("Subiendo")
+          
+          go_to_goal(x/100, y/100, 0.35)
+          #exit()
+          print("PUNTO 2")
+          
+          go_to_goal(0.600, -0.430, 0.35)
+          print("Bajando")
+          runScript("openGripper")
+          go_to_goal(0.600, -0.430, 0.22)
+          print("Subiendo")
+          runScript("closeGripper")
+          go_to_goal(0.600, -0.430, 0.35)
+          #print("PUNTO 3")
+          #go_to_goal(-0.3,-0.5, 0.35)
+            
+          #rate.sleep()
 
 
 if __name__ == "__main__":

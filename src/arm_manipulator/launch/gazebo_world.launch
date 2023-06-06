@@ -3,12 +3,18 @@
 
    <!-- Set up env variable so plugin and textures are found -->
   <env name="GAZEBO_PLUGIN_PATH" value="$(find arm_manipulator)/plugins"/>
-  <env name="GAZEBO_MODEL_PATH" value="$(find arm_manipulator)/models"/>
-  <env name="GAZEBO_RESOURCE_PATH" value="$(find arm_manipulator)/models" />
+  <env name="GAZEBO_MODEL_PATH" value="$(find arm_manipulator)/worlds"/>
+  <env name="GAZEBO_RESOURCE_PATH" value="$(find arm_manipulator)/worlds" />
 
+
+  <arg name="add_gripper" default="true" />
   <arg name="DOBOT_TYPE" default="$(env DOBOT_TYPE)" />
+
+  
   <include file="$(find dobot_gazebo)/launch/$(arg DOBOT_TYPE)_robot_description.xml"/>
-  <include file="$(find dobot_gazebo)/launch/robot_control.xml"/>
+  <include file="$(find dobot_gazebo)/launch/robot_control.xml">
+    <arg name="add_gripper" value="$(arg add_gripper)" />
+  </include>
 
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="verbose" value="true" />

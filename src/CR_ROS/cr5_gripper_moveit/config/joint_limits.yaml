@@ -52,12 +52,15 @@ joint_limits:
     max_velocity: 100
     has_acceleration_limits: false
     max_acceleration: 0
+    max_position: !degrees 0
+    min_position: !degrees -90
+
   joint3:
     has_velocity_limits: true
     max_velocity: 100
     has_acceleration_limits: false
     max_acceleration: 0
-    min_position: !degrees 0
+    max_position: !degrees 0
   joint4:
     has_velocity_limits: true
     max_velocity: 100

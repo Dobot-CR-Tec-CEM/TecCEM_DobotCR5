@@ -10,11 +10,11 @@
         DH3         : DH3
         RGI-Series  : RGI
     -->
-    <arg name="GripperModel" default="AG95 Modbus"/>
+    <arg name="GripperModel" default="AG95_MB"/>
     <arg name="Connectport" default="/dev/ttyUSB0"/>
     <arg name="Baudrate" default="115200"/>
 
-    <arg name="test_run" default="true"/>
+    <arg name="test_run" default="false"/>
 
     <node pkg="dh_gripper_driver" type="dh_gripper_driver" name="dh_gripper_driver" respawn="true" output="screen">
         <param name="Gripper_ID" type="string" value="$(arg GripperID)" />
