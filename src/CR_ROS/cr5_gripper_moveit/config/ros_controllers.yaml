@@ -1,6 +1,7 @@
 # Simulation settings for using moveit_sim_controllers
 moveit_sim_hw_interface:
   joint_model_group: cr5_gripper_robot
+  join_model_group: gripper_controller
   joint_model_group_pose: home
 # Settings for ros_control_boilerplate control loop
 generic_hw_control_loop:
@@ -39,4 +40,4 @@ controller_list:
     default: True
     type: FollowJointTrajectory
     joints:
-      []
+      - gripper_finger1_joint

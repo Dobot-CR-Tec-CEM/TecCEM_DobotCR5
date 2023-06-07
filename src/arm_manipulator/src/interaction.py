@@ -1,5 +1,12 @@
 #!/usr/bin/env python
 
+"""
+Codigo para manipular el brazo por medio de la lectura de arucos
+y moviendose hacia los mismos. 
+
+"""
+
+
 import rospy, tf
 import numpy as np
 import tf2_ros
@@ -7,7 +14,7 @@ import random as rd
 from std_msgs.msg import String
 from sensor_msgs.msg import JointState
 import sys
-
+import copy
 import moveit_commander
 import moveit_msgs.msg
 import geometry_msgs.msg
@@ -168,6 +175,34 @@ def go_to_goal(x=0, y=0, z=0, w=0):
     print("TERMINANDO DE MOVERSE")
     rospy.sleep(18)
 
+
+def move_down(z=0.1):
+    waypoints = []
+
+    display_trajectory = moveit_msgs.msg.DisplayTrajectory()
+    display_trajectory.trajectory_start = robot.get_current_state()
+    # start with the current pose
+    waypoints.append(move_group.get_current_pose().pose)
+
+    # first orient gripper and move forward (+x)
+    wpose = geometry_msgs.msg.Pose()
+    wpose.orientation.x = 1.0
+    wpose.position.z = waypoints[0].position.z - z
+    waypoints.append(copy.deepcopy(wpose))
+
+    (plan3, fraction) = move_group.compute_cartesian_path(
+                                waypoints,   # waypoints to follow
+                                0.01,        # eef_step
+                                0.0)         # jump_threshold
+
+    #print "============ Waiting while RVIZ displays plan3..."
+    display_trajectory.trajectory.append(plan3)
+    display_trajectory_publisher.publish(display_trajectory)
+
+    move_group.go(wait=False)
+    rospy.sleep(10)
+
+
 def get_current_pose():
     print(move_group.get_current_pose())
 
@@ -185,15 +220,6 @@ def add_table():
         scene.add_box(table_name, table_obs, size=(1.5, 0.801, 0.1))
     obstacle_added = wait_for_state_update(table_name, box_is_known=True, timeout=1.5)
 
-def armOrientation():
-    rospy.wait_for_service("/dobot_bringup/srv/SetArmOrientation")
-    
-    try:
-        arm = rospy.ServiceProxy("/dobot_bringup/srv/SetArmOrientation", SetArmOrientation)
-        resp = arm(-1, 1, 1, 1)
-        return resp
-    except rospy.ServiceException as e:
-        print("Service Failed:", e)
 
 def runScript(name):
     rospy.wait_for_service("/dobot_bringup/srv/RunScript")
@@ -235,13 +261,12 @@ def clearError():
     except rospy.ServiceException as e:
         print("Service Failed:", e)
 
-
-def runScript(name):
-    rospy.wait_for_service("/dobot_bringup/srv/RunScript")
+def payLoad(amount, inertia):
+    rospy.wait_for_service("/dobot_bringup/srv/PayLoad")
     
     try:
-        f = rospy.ServiceProxy("/dobot_bringup/srv/RunScript", RunScript)
-        resp = f(name)
+        pay = rospy.ServiceProxy("/dobot_bringup/srv/PayLoad", PayLoad)
+        resp = pay(amount, inertia)
         return resp
     except rospy.ServiceException as e:
         print("Service Failed:", e)
@@ -260,45 +285,42 @@ pose = rospy.Subscriber("/pose_aruco", Pose2D, coords_callback)
 
 
 def main():
-   speedFactor()
-   #armOrientation()
-   add_table()
-   runScript("initGripper")
-   runScript("openGripper")
-   while not rospy.is_shutdown():
-      print("HOME")
-    #   get_current_pose()
-      go_home_pose()
-      #move_joints()
-      #print(getTf("box1"))
-      if medicion_ArUco.x and medicion_ArUco.y != None:
-          x = medicion_ArUco.x
-          y = medicion_ArUco.y
-          print('llendo a: ', x, y)
-          print("PUNTO 1")
-          runScript("openGripper")
-          go_to_goal(x/100, y/100, 0.35)
-          print("Bajando")
-          
-          runScript("closeGripper")
-          go_to_goal(x/100, y/100, 0.22)
-          print("Subiendo")
-          
-          go_to_goal(x/100, y/100, 0.35)
-          #exit()
-          print("PUNTO 2")
-          
-          go_to_goal(0.600, -0.430, 0.35)
-          print("Bajando")
-          runScript("openGripper")
-          go_to_goal(0.600, -0.430, 0.22)
-          print("Subiendo")
-          runScript("closeGripper")
-          go_to_goal(0.600, -0.430, 0.35)
-          #print("PUNTO 3")
-          #go_to_goal(-0.3,-0.5, 0.35)
-            
-          #rate.sleep()
+    speedFactor()
+    #payLoad(1,1)
+    add_table()
+    print("Inciando Gripper")
+    runScript("initGripper")
+    print("Abriendo Gripper")
+    runScript("openGripper")
+    print("HOME")
+    go_home_pose()
+    while not rospy.is_shutdown():
+      
+        if medicion_ArUco.x and medicion_ArUco.y != None:
+            x = medicion_ArUco.x
+            y = medicion_ArUco.y
+            print('llendo a: ', x, y)
+            print("Abriendo Gripper")
+            runScript("openGripper")
+            go_to_goal(x/100, y/100, 0.35)
+            print("Bajando")
+            runScript("closeGripper")
+            go_to_goal(x/100, y/100, 0.22)
+            print("Cerrando Gripper")
+            print("Subiendo")
+            go_to_goal(x/100, y/100, 0.35)
+            print("Llendo a 0.6, '0.4")
+            go_to_goal(0.600, -0.430, 0.35)
+            print("Bajando")
+            runScript("openGripper")
+            go_to_goal(0.600, -0.430, 0.22)
+            print("Abriendo Gripper")
+            print("Subiendo")
+            runScript("closeGripper")
+            go_to_goal(0.600, -0.430, 0.35)
+
+        print("HOME")
+        go_home_pose()
 
 
 if __name__ == "__main__":

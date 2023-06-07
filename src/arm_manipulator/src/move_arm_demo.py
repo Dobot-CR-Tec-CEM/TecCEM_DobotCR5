@@ -22,7 +22,7 @@ robot = moveit_commander.RobotCommander()
 
 scene = moveit_commander.PlanningSceneInterface()
 
-group_name = "cr5_gripper_arm"
+group_name = "cr5_gripper_robot"
 move_group = moveit_commander.MoveGroupCommander(group_name)
 
 

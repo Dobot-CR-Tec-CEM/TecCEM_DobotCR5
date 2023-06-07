@@ -27,7 +27,7 @@ cr5_gripper_robot:
   state_publish_rate:  25
   action_monitor_rate: 10
 
-gripper:
+gripper_controller:
   joint_state_controller:
     type: position_controllers/JointTrajectoryController
     publish_rate: 50
