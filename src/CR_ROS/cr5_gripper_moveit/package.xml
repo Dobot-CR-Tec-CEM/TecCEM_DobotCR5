@@ -3,10 +3,10 @@
   <name>cr5_gripper_moveit</name>
   <version>0.3.0</version>
   <description>
-     An automatically generated package with all the configuration and launch files for using the cr5_robot with the MoveIt! Motion Planning Framework
+     An automatically generated package with all the configuration and launch files for using the cr5_gripper_robot with the MoveIt! Motion Planning Framework
   </description>
-  <author email="daniela.aluna@outlook.com">Daniela Avila Luna</author>
-  <maintainer email="daniela.aluna@outlook.com">Daniela Avila Luna</maintainer>
+  <author email="daniela.aluna@outlook.com">Daniela Avila</author>
+  <maintainer email="daniela.aluna@outlook.com">Daniela Avila</maintainer>
 
   <license>BSD</license>
 

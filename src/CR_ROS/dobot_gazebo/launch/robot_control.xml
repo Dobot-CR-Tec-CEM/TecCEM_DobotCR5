@@ -1,13 +1,23 @@
 <launch>
   <!--Load the joint controllers to param server-->
   <arg name="DOBOT_TYPE" default="$(env DOBOT_TYPE)" />
+  <arg name="add_gripper" default="false" />
+
   <rosparam file="$(find dobot_gazebo)/config/$(arg DOBOT_TYPE)_moveit_controllers.yaml" command="load"/>
 
   <!--Load controllers-->
   <node name="spawner" pkg="controller_manager" type="spawner" respawn="false"
-    output="screen" ns="/$(arg DOBOT_TYPE)_robot" args="
-joint_controller
-joint_state_controller"/>
+    output="screen" ns="/$(arg DOBOT_TYPE)_robot" args="joint_controller joint_state_controller"/>
 
+   <!--Adding the gripper-->
+ <rosparam if="$(arg add_gripper)"
+    file="$(find dobot_gazebo)/config/gripper_traj_controller.yaml" command="load" ns="/$(arg DOBOT_TYPE)_robot"/>
+  <node if="$(arg add_gripper)" name="gripper_controller_spawner"
+    pkg="controller_manager"
+    type="spawner"
+    respawn="false"
+    output="screen"
+    ns="/gripper"
+    args="joint_controller joint_state_controller"/>
 
 </launch>

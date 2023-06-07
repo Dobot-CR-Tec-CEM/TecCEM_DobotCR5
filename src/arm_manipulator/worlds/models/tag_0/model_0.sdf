@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+<model name="Aruco tag0">
+
+  <visual>
+    <!-- <pose frame=''>0 0 -0.0025 0 -0 0</pose> -->
+    <geometry>
+      <box>
+        <size>0.33 0.33 0.005</size>
+        
+      </box>
+    </geometry>
+    <material>
+      <script>
+        <uri>model://tag_0/materials/scripts </uri>
+        <uri>model://tag_0/materials/textures </uri>
+         <name>aruco_tag_0</name>
+      </script>
+    </material>
+  </visual>
+</model>
+
+</sdf>

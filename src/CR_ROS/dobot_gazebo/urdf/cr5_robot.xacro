@@ -270,6 +270,8 @@
 
 
 
+
+
  <xacro:macro name="cr5_transmission" params="joint_name">
      <transmission name="${joint_name}_trans">
        <type>transmission_interface/SimpleTransmission</type>
