@@ -1,6 +1,6 @@
 # Dobot CR5 - Tecnológico de Monterrey Campus Estado de México
 
-Colaboradores:
+Colaboradores (y los que sigan):
 - Eva Denisse Vargas Sosa [@denvars](https://github.com/denvars)
 - Daniela Avila Luna [@DannyAvilaL](https://github.com/DannyAvilaL)
 - Roberto David Manzo González [@robertomanzo2203](https://github.com/robertomanzo2203)
