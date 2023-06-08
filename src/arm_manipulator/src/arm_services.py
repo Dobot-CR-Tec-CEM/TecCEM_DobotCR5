@@ -1,5 +1,11 @@
 #!/usr/bin/env python
 
+"""
+Nodo para enviar instrucciones directas a los servicios
+que se dan de alta al lanzar dobot_bringup.
+"""
+
+
 import rospy
 from dobot_bringup.srv import *
 

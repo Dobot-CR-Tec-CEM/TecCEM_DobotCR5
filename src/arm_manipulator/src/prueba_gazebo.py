@@ -23,11 +23,11 @@ robot = moveit_commander.RobotCommander()
 scene = moveit_commander.PlanningSceneInterface()
 
 box_name = ""
-group_name = "cr5_arm"
-#gripper_group_name = "hand"
+group_name = "cr5_gripper_robot"
+gripper_group_name = "gripper"
 
 move_group = moveit_commander.MoveGroupCommander(group_name)
-#gripper_group = moveit_commander.MoveGroupCommander(gripper_group_name)
+gripper_group = moveit_commander.MoveGroupCommander(gripper_group_name)
 
 display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path',
                                                         moveit_msgs.msg.DisplayTrajectory,
@@ -36,7 +36,15 @@ display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path
 eef_link = move_group.get_end_effector_link()
 print(eef_link)
 
+# We can get a list of all the groups in the robot:
+group_names = robot.get_group_names()
+print ("============ Available Planning Groups:", robot.get_group_names())
 
+# Sometimes for debugging it is useful to print the entire state of the
+# robot:
+print ("============ Printing robot state")
+print (robot.get_current_state())
+print ("")
 
 def wait_for_state_update(box_name, box_is_known=False, box_is_attached=False, timeout=0.5):
     start = rospy.get_time()
@@ -149,40 +157,55 @@ def go2Pose(x, y, z=0.30):
 
 def Down():
     pose_goal = move_group.get_current_pose().pose
-    pose_goal.position.z -= 0.05
+    pose_goal.position.z -= 0.10
     move_group.set_pose_target(pose_goal, "Link6")
     plan = move_group.go(wait=True)
     
 
 def Up():
     pose_goal = move_group.get_current_pose().pose
-    pose_goal.position.z += 0.05
+    pose_goal.position.z += 0.15
     move_group.set_pose_target(pose_goal, "Link6")
     plan = move_group.go(wait=True)
+
+def attachBox(box_name):
+    touch_links = robot.get_link_names(group=gripper_group_name)
+    scene.attach_box(eef_link, box_name, touch_links=touch_links)
+
+def deattach(box_name):
+    scene.remove_attached_object(eef_link, name=box_name)
+
+def removeBox(box_name):
+    scene.remove_world_object(box_name)
 
 def main():
     """
     Main function that will excecute the
     instructions of the arm.
     """
-    add_table("mesa", -0.02, -0.2, -0.1, (1.5, 0.801, 0.1))
-    #add_table("box1", 0.535, -0.405, 0.30, (0.05, 0.05, 0.05))
+    box_x = 0.1
+    box_y = -0.3
+    add_table("mesa", -0.02, -0.2, -0.09, (1.5, 0.801, 0.05))
+    add_table("box1", box_x, box_y, -0.05, (0.05, 0.05, 0.05))
     
-
-    #add_table()
     homePose()
-    #goToBox("box1")
-    #for i in range(2):
+    #while not rospy.is_shutdown():
     print("Llendo a primer punto")
-    go2Pose(0.535, -0.405)
-    #print("Bajando")
-    #Down()
-    #Up()
-    #print("Llendo a siguiente punto")
-    #go2Pose(-0.535, -0.405)
-    #Down()
-    #Up()
-    #rospy.signal_shutdown("Task Completed")
+    go2Pose(box_x, box_y)
+    print("Bajando")
+    Down()
+    #attach en rviz para que lo tome
+    attachBox("box1")
+    Up()
+    print("Llendo a siguiente punto")
+    go2Pose(-0.4, box_y)
+    Down()
+    # deattach en rviz para que lo tome
+    deattach("box1")
+    removeBox("box1")
+    Up()
+    homePose()
+    rospy.signal_shutdown("Task Completed")
 
 
 if __name__ == "__main__":
