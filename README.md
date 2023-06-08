@@ -1,4 +1,4 @@
-# TecCEM_DobotCRR5
+# Dobot CR5 - Tecnológico de Monterrey Campus Estado de México
 
 Colaboradores:
 - Eva Denisse Vargas Sosa [@denvars](https://github.com/denvars)
