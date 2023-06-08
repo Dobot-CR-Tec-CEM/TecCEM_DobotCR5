@@ -84,22 +84,31 @@ rosrun arm_manipulator interaction.py
 
 # Documentación de ayuda
 ### Información del robot y del gripper
-[Documentacion de Dobot](https://docs.trossenrobotics.com/dobot_cr_cobots_docs/index.html)
-[Página Oficial de Dobot](https://www.dobot-robots.com/products/cr-series/dobot-cr-series.html)
-[Documentación de Dobot adicional](https://www.trossenrobotics.com/Shared/DOBOT/CR_App_Guide.pdf)
-[Repositorio de Github de Dobot para manipulación con ROS](https://github.com/Dobot-Arm/CR_ROS)
-[Repositorio de Gripper DH instalado](https://github.com/DH-Robotics/dh_gripper_ros/tree/master/dh_gripper_driver)
-[Documentacin del Gripper DH instalado](https://www.trossenrobotics.com/Shared/DH/ag-95-short-manual_v2.1-modbus-rtu.pdf)
-[Formato de SDF](http://sdformat.org/)
+- [Documentacion de Dobot](https://docs.trossenrobotics.com/dobot_cr_cobots_docs/index.html)
+
+- [Página Oficial de Dobot](https://www.dobot-robots.com/products/cr-series/dobot-cr-series.html)
+
+- [Documentación de Dobot adicional](https://www.trossenrobotics.com/Shared/DOBOT/CR_App_Guide.pdf)
+
+- [Repositorio de Github de Dobot para manipulación con ROS](https://github.com/Dobot-Arm/CR_ROS)
+
+- [Repositorio de Gripper DH instalado](https://github.com/DH-Robotics/dh_gripper_ros/tree/master/dh_gripper_driver)
+
+- [Documentacin del Gripper DH instalado](https://www.trossenrobotics.com/Shared/DH/ag-95-short-manual_v2.1-modbus-rtu.pdf)
+
+- [Formato de SDF](http://sdformat.org/)
+
 
 ### Problemas del pasado
-[Path dinámico para modelos](https://answers.gazebosim.org//question/3402/import-custom-dae-file-in-gazebo-from-the-world-file-error-of-path-does-not-exist/)
-[Path dinámico pt.2](https://answers.gazebosim.org//question/16159/how-to-include-uri-relatively/)
-[Errores de Fake_controller_manager](http://docs.ros.org/en/melodic/api/moveit_tutorials/html/doc/fake_controller_manager/fake_controller_manager_tutorial.html)
-[Error Type-effort-controllers-jointsposition-controller-does-not-exist](https://answers.ros.org/question/144556/controller-type-effort_controllersjointpositioncontroller-does-not-exist/)
+- [Path dinámico para modelos](https://answers.gazebosim.org//question/3402/import-custom-dae-file-in-gazebo-from-the-world-file-error-of-path-does-not-exist/)
+
+- [Path dinámico pt.2](https://answers.gazebosim.org//question/16159/how-to-include-uri-relatively/)
+
+- [Errores de Fake_controller_manager](http://docs.ros.org/en/melodic/api/moveit_tutorials/html/doc/fake_controller_manager/fake_controller_manager_tutorial.html)
+- [Error Type-effort-controllers-jointsposition-controller-does-not-exist](https://answers.ros.org/question/144556/controller-type-effort_controllersjointpositioncontroller-does-not-exist/)
 
 Cambios de controladores en gripper para simulación en gazebo. La versión para melodic es Gazebo 9, el gripper originalmente está hecho para Kinetic, gazebo 7.
-[Issue resuelto en headers](https://github.com/filesmuggler/robotiq/commit/70fd72e982674c4231bd6aed414db63bf3ccb55b)
+- [Issue resuelto en headers](https://github.com/filesmuggler/robotiq/commit/70fd72e982674c4231bd6aed414db63bf3ccb55b)
 
 # Futuras mejoras ideales.
 - Mejorar el algoritmo de visión que obtenga X, Y y Theta del aruco y realizar la transformación hacia el efector final.
